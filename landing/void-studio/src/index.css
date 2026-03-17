@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0D0D0D;
+  --color-acid: #E8F227;
+  --color-paper: #F5F0E8;
+  --color-ash: #A8A49C;
+  --color-vermillion: #D4341A;
+
+  --font-family-display: "Playfair Display", serif;
+  --font-family-mono: "DM Mono", monospace;
+  --font-family-accent: "Fraunces", serif;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-mono antialiased;
+    margin: 0;
+    cursor: none;
+  }
+
+  ::selection {
+    @apply bg-acid text-ink;
+  }
+}
+
+@layer components {
+  .grain {
+    position: relative;
+  }
+
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .hairline-border {
+    border: 1px solid var(--color-ink);
+  }
+
+  .system-label {
+    @apply text-xs uppercase;
+    letter-spacing: 0.4em;
+  }
+
+  .divider-thick {
+    height: 6px;
+    @apply bg-ink w-full;
+  }
+}
+
+@layer utilities {
+  .tracking-system {
+    letter-spacing: 0.4em;
+  }
+}
+
+.gsap-mask {
+  clip-path: inset(0 0 100% 0);
+}
+
+.gsap-mask-revealed {
+  clip-path: inset(0 0 0% 0);
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-animation {
+  animation: ticker 30s linear infinite;
+}
+
+.ticker-animation:hover {
+  animation-play-state: paused;
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-slow {
+  animation: rotate-slow 120s linear infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
